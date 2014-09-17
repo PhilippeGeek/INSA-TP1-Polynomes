@@ -1,13 +1,18 @@
 package org.insalyon.pc.vienne;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        double[] poly1 = {4, 5, 0, -9, 1};
-        displayPoly(poly1);
-        displayPoly(derivePoly(poly1));
-        displayPoly(derivePoly(derivePoly(poly1)));
-        System.out.println(polyNewton(poly1,2,0.00001));
+        int deg=readInt("Quel est le degré de votre polynome ?");
+        double[] poly=new double[deg+1];
+        for(int i=0;i<=deg;i++)
+            poly[i]=readDouble("Coefficient du degré "+i);
+        System.out.println("Le polynome est donc :");
+        displayPoly(poly);
+        System.out.println("La racine la plus proche est : " +
+            polyNewton(poly,readDouble("On commence à la valeur"),readDouble("Quelle précision ?")));
     }
 
     /**
@@ -93,5 +98,35 @@ public class Main {
                 areNull=false;
         }
         return areNull;
+    }
+
+    /**
+     * Demande à l'utilisateur de saisir un entier
+     * @param question La question à poser à l'utilisateur
+     * @return L'entier saisit
+     */
+    private static int readInt(String question){
+        Scanner sc=new Scanner(System.in);
+        System.out.print(question+" : ");
+        try{
+            return sc.nextInt();
+        }catch(Exception e){
+            return readInt(question+" (Again !) ");
+        }
+    }
+
+    /**
+     * Demande à l'utilisateur de saisir un décimal
+     * @param question La question à poser à l'utilisateur
+     * @return L'entier saisit
+     */
+    private static double readDouble(String question){
+        Scanner sc=new Scanner(System.in);
+        System.out.print(question+" : ");
+        try{
+            return sc.nextDouble();
+        }catch(Exception e){
+            return readDouble(question + " (Again !) ");
+        }
     }
 }
