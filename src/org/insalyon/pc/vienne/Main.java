@@ -7,7 +7,7 @@ public class Main {
         displayPoly(poly1);
         displayPoly(derivePoly(poly1));
         displayPoly(derivePoly(derivePoly(poly1)));
-        System.out.println(valPoly(poly1,2));
+        System.out.println(polyNewton(poly1,2,0.00001));
     }
 
     /**
@@ -28,7 +28,6 @@ public class Main {
             if(i!=0&&!isCoefNullBetween(coeffs,0,i))
                 builder.append("+");
         }
-        System.out.println();
         System.out.println(builder);
     }
 
@@ -56,6 +55,23 @@ public class Main {
         for(int i=1;i<coeffs.length;i++)
             derive[i-1]=coeffs[i]*i;
         return derive;
+    }
+
+    /**
+     * Racines par newton.
+     * Recherche la racine la plus proche pour le polynôme par la Méthode de Newton (x_(n+1)=x_n-(P(x_n)/P'(x_n))).
+     * @param coeffs Les coefficients du polynôme
+     * @param start Point de départ de la suite (x_0)
+     * @param precision Précision du P(x)
+     * @return La racine la plus proche trouvée.
+     */
+    public static double polyNewton(double[] coeffs, double start, double precision){
+        double[] coeffsDerive = derivePoly(coeffs);
+        double x=start;
+        while (Math.abs(valPoly(coeffs,x))>precision){
+            x=x-(valPoly(coeffs,x)/valPoly(coeffsDerive,x));
+        }
+        return x;
     }
 
     /**
