@@ -4,6 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         displayPoly(new double[]{4,5,0,0,1});
+        System.out.println(valPoly(new double[]{1,3,5},2));
     }
 
     /**
@@ -24,7 +25,22 @@ public class Main {
             if(i!=0&&!isCoefNullBetween(coeffs,0,i))
                 builder.append("+");
         }
-        System.out.print(builder);
+        System.out.println();
+        System.out.println(builder);
+    }
+
+    /**
+     * Calcule la valeur d'un polynôme pour un x donnée.
+     * @param coeffs Les coefficients du polynôme
+     * @param x Le x pour lequel on calcule
+     * @return La valeur
+     */
+    public static double valPoly(double[] coeffs, double x){
+        double value=0;
+        for (int i = coeffs.length-1; i >= 0; i--) {
+            value = value * x + coeffs[i];
+        }
+        return value;
     }
 
     /**
