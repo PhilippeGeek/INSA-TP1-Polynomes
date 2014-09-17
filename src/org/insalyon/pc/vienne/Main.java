@@ -3,8 +3,11 @@ package org.insalyon.pc.vienne;
 public class Main {
 
     public static void main(String[] args) {
-        displayPoly(new double[]{4,5,0,0,1});
-        System.out.println(valPoly(new double[]{1,3,5},2));
+        double[] poly1 = {4, 5, 0, -9, 1};
+        displayPoly(poly1);
+        displayPoly(derivePoly(poly1));
+        displayPoly(derivePoly(derivePoly(poly1)));
+        System.out.println(valPoly(poly1,2));
     }
 
     /**
@@ -41,6 +44,18 @@ public class Main {
             value = value * x + coeffs[i];
         }
         return value;
+    }
+
+    /**
+     * Dérivé du polynôme.
+     * @param coeffs Les coefficients du polynôme
+     * @return les coefficients de la dérivé
+     */
+    public static double[] derivePoly(double[] coeffs){
+        double[] derive=new double[coeffs.length-1];
+        for(int i=1;i<coeffs.length;i++)
+            derive[i-1]=coeffs[i]*i;
+        return derive;
     }
 
     /**
