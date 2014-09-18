@@ -21,19 +21,19 @@ public class Main {
      *
      */
     public static void displayPoly(double[] coeffs){
-        StringBuilder builder = new StringBuilder("");
+        String poly = "";
         for (int i = coeffs.length-1; i >= 0; i--) {
             if(coeffs[i]==0)
                 continue;
-            builder.append('(').append(coeffs[i]).append(')');
+            poly+="("+coeffs[i]+")";
             if(i>1)
-                builder.append("x^").append(i);
+                poly+="x^"+i;
             else if(i>0)
-                builder.append("x");
+                poly+="x";
             if(i!=0&&!isCoefNullBetween(coeffs,0,i))
-                builder.append("+");
+                poly+="+";
         }
-        System.out.println(builder);
+        System.out.println(poly);
     }
 
     /**
