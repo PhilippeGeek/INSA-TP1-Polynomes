@@ -5,13 +5,21 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        // On demande le degré du polynome à entrer
         int deg=readInt("Quel est le degré de votre polynome ?");
+
+        // On prépare le tableau des coefficients
         double[] poly=new double[deg+1];
         for(int i=0;i<=deg;i++)
+            // On demande chaque coefficients à l'utilisateur
             poly[i]=readDouble("Coefficient du degré "+i);
+        // On affiche le polynôme saisit
         System.out.println("Le polynome est donc :");
         displayPoly(poly);
+
+        // Recherche de racine
         System.out.println("La racine la plus proche est : " +
+                // Dans ce paramètre, on demande à la fois la valeur de début et la précision et on lance le calcul.
             polyNewton(poly,readDouble("On commence à la valeur"),readDouble("Quelle précision ?")));
     }
 
@@ -23,14 +31,14 @@ public class Main {
     public static void displayPoly(double[] coeffs){
         String poly = "";
         for (int i = coeffs.length-1; i >= 0; i--) {
-            if(coeffs[i]==0)
+            if(coeffs[i]==0) // Si le coefficient est nul on affiche rien
                 continue;
             poly+="("+coeffs[i]+")";
-            if(i>1)
+            if(i>1) // Si le coefficient est supérieur à 1 on affiche la puissance
                 poly+="x^"+i;
-            else if(i>0)
+            else if(i>0) // Pour 1, on affiche juste x
                 poly+="x";
-            if(i!=0&&!isCoefNullBetween(coeffs,0,i))
+            if(i!=0&&!isCoefNullBetween(coeffs,0,i)) // On écrit '+' uniquement si on a quelque chose à écrire
                 poly+="+";
         }
         System.out.println(poly);
@@ -58,7 +66,7 @@ public class Main {
     public static double[] derivePoly(double[] coeffs){
         double[] derive=new double[coeffs.length-1];
         for(int i=1;i<coeffs.length;i++)
-            derive[i-1]=coeffs[i]*i;
+            derive[i-1]=coeffs[i]*i; // On décale les coefficients de 1 en multipliant par la puissance (cf. Maths)
         return derive;
     }
 
@@ -71,10 +79,10 @@ public class Main {
      * @return La racine la plus proche trouvée.
      */
     public static double polyNewton(double[] coeffs, double start, double precision){
-        double[] coeffsDerive = derivePoly(coeffs);
+        double[] coeffsDerive = derivePoly(coeffs); // On récupère la dérivée
         double x=start;
-        while (Math.abs(valPoly(coeffs,x))>precision){
-            x=x-(valPoly(coeffs,x)/valPoly(coeffsDerive,x));
+        while (Math.abs(valPoly(coeffs,x))>precision){ // Tant qu'on a pas la précision voulut
+            x=x-(valPoly(coeffs,x)/valPoly(coeffsDerive,x)); // On calcule le terme suivant
         }
         return x;
     }
